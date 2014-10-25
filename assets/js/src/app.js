@@ -191,7 +191,7 @@ lib.Header = React.createClass({
         </Link>
         <div className={this.b_('-user')}>
           <div className={this.b_('-userPic')}></div>
-          <div className={this.b_('-userName')}>Cool Rita</div>
+          <div className={this.b_('-userName')}>{(window.userModel && JSON.parse(window.userModel).name) || 'Adam Smith'}</div>
         </div>
       </div>
     );

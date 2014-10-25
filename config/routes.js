@@ -33,7 +33,12 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
+    view: 'homepage',
+    locals: {
+      userModel: JSON.stringify({
+        name: 'Frank Sinatra'
+      })
+    }
   },
 
   'get /auth/(facebook|vkontakte|twitter)': 'AuthController.auth',
@@ -51,7 +56,7 @@ module.exports.routes = {
   'get /user/:id/tasks/completed': 'UserController.get_tasks_completed',
   'get /user/:id/tasks/count': 'TaskController.get_count_by_user',
 
-  
+
 
 
   /***************************************************************************
