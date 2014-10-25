@@ -2,40 +2,77 @@
 var bemMixin = require('./bem'),
   lib = {};
 
+var Router = ReactRouter,
+  Route = ReactRouter.Route,
+  DefaultRoute = ReactRouter.DefaultRoute,
+  Link = ReactRouter.Link,
+  Routes = ReactRouter.Routes;
+
+
+lib.cardsProc = { /* mixin */
+  onReceiveCards: function(res) {
+    var cards = res.map(function(card) {
+      return {
+        from: card['src_user']['Name'],
+        title: card['challenge']['Name'],
+        description: 'TODO'
+      }
+    });
+    this.setState({ initCards: cards });
+  }
+};
+
 lib.App = React.createClass({
   mixins: [bemMixin],
-  initApp: function() {
+  render: function() {
+    return (
+      <div className={this.b_()}>
+        <lib.Header />
+        <this.props.activeRouteHandler/>
+      </div>
+    );
+  }
+});
+
+lib.Main = React.createClass({
+  mixins: [bemMixin, lib.cardsProc],
+  initMain: function() {
     $.get('/user/1/tasks/').then(this.onReceiveCards);
     $.get('user/1/tasks/count/').then(this.onReceiveCounts);
   },
   getInitialState: function() {
-    this.initApp();
+    this.initMain();
 
     return {
       initCards: [],
       menuItems: [
         {
           id: 'full_to_do_count',
+          route: 'todo',
           title: 'Full todo list',
           count: 0
         },
         {
           id: 'topay',
+          route: 'pay',
           title: 'Need to be paid',
           count: 0
         },
         {
           id: 'sent',
+          route: 'sent',
           title: 'Sent',
           count: 0
         },
         {
           id: 'Popular',
+          route: 'popular',
           title: 'Popular',
           count: 0
         },
         {
           id: 'completed',
+          route: 'completed',
           title: 'Completed',
           count: 0
         }
@@ -63,16 +100,6 @@ lib.App = React.createClass({
 
     this.setState({ menuItems: newMenu });
   },
-  onReceiveCards: function(res) {
-    var cards = res.map(function(card) {
-      return {
-        from: card['src_user']['Name'],
-        title: card['challenge']['Name'],
-        description: 'TODO'
-      }
-    });
-    this.setState({ initCards: cards });
-  },
   render: function() {
     var menuLines = this.state.menuItems.map(function(line) {
       return (
@@ -88,11 +115,37 @@ lib.App = React.createClass({
 
     return (
       <div className={this.b_()}>
-        <lib.Header />
         {initCardsNodes}
         <ul className={'nav nav-pills nav-stacked ' + this.b_('-menu')}>
           {menuLines}
         </ul>
+      </div>
+    );
+  }
+});
+
+lib.Pay = React.createClass({
+  mixins: [bemMixin, lib.cardsProc],
+  initPay: function() {
+    $.get('/user/1/tasks/topay').then(this.onReceiveCards)
+  },
+  getInitialState: function() {
+    this.initPay();
+
+    return {
+      initCards: []
+    }
+  },
+  render: function() {
+    var initCardsNodes = this.state.initCards.map(function(card) {
+      return (
+        <lib.ChallengeCard data={card} />
+      );
+    });
+
+    return (
+      <div className={this.b_()}>
+        {initCardsNodes}
       </div>
     );
   }
@@ -103,10 +156,10 @@ lib.MenuLine = React.createClass({
   render: function() {
     return (
       <li className={this.b_()}>
-        <a href="#">
+        <Link to={this.props.line.route}>
           <span className="badge pull-right">{this.props.line.count}</span>
           {this.props.line.title}
-        </a>
+        </Link>
       </li>
     );
   }
@@ -148,7 +201,21 @@ lib.ChallengeCard = React.createClass({
   }
 });
 
+
+var routes = (
+  <Routes location="history">
+    <Route name="app" path="/" handler={lib.App}>
+      <DefaultRoute handler={lib.Main}/>
+      <Route name="pay" path="pay" handler={lib.Pay} />
+      <Route name="todo" path="todo" handler={lib.Pay} />
+      <Route name="sent" path="sent" handler={lib.Pay} />
+      <Route name="popular" path="popular" handler={lib.Pay} />
+      <Route name="completed" path="completed" handler={lib.Pay} />
+    </Route>
+  </Routes>
+);
+
 React.renderComponent(
-  <lib.App />,
+  routes,
   document.getElementById('app')
 );
