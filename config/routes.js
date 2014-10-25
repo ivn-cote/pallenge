@@ -46,6 +46,7 @@ module.exports.routes = {
   'get /user/:id/friends': 'UserController.get_friends',
   'get /user/:id/challenges': 'UserController.get_challanges',
   'get /user/:id/tasks': 'UserController.get_tasks',
+  'get /user/:id/tasks/topay': 'UserController.get_tasks_to_pay',
   
 
 

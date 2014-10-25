@@ -42,6 +42,17 @@ module.exports = {
       })
     })
 
-  }
+  },
+
+  get_tasks_to_pay: function (req, res) {
+    var id = req.param('id');
+
+    Task.find({src_user: id, state: 'closed'})
+        .populate('dst_user')
+        .populate('challenge')
+        .then(function (task) {
+          res.json(task);
+      })
+  } 
 };
 
