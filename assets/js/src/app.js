@@ -151,6 +151,17 @@ lib.Pay = React.createClass({
   }
 });
 
+lib.New = React.createClass({
+  mixins: [bemMixin, lib.cardsProc],
+  render: function() {
+    return (
+      <div className={this.b_()}>
+        NEW ONE
+      </div>
+    );
+  }
+});
+
 lib.MenuLine = React.createClass({
   mixins: [bemMixin],
   render: function() {
@@ -170,7 +181,18 @@ lib.Header = React.createClass({
   render: function() {
     return (
       <div className={this.b_()}>
-        <div className={this.b_('-logo')}/>
+        <Link to="app">
+          <div className={this.b_('-logo')} />
+        </Link>
+        <Link to="new">
+          <div className={this.b_('-newButton')}>
+            <span className="glyphicon glyphicon-send" />
+          </div>
+        </Link>
+        <div className={this.b_('-user')}>
+          <div className={this.b_('-userPic')}></div>
+          <div className={this.b_('-userName')}>Cool Rita</div>
+        </div>
       </div>
     );
   }
@@ -193,7 +215,7 @@ lib.ChallengeCard = React.createClass({
         <div className={this.b_('-img')}/>
         <div className={this.b_('-info')}>
           <div className={this.b_('-title')}>{this.props.data.title}</div>
-          <div className={this.b_('-user')}>{this.props.data.from}</div>
+          <div className={this.b_('-user')}>from {this.props.data.from}</div>
           <div>{this.props.data.description}</div>
         </div>
       </div>
@@ -206,6 +228,7 @@ var routes = (
   <Routes location="history">
     <Route name="app" path="/" handler={lib.App}>
       <DefaultRoute handler={lib.Main}/>
+      <Route name="new" path="new" handler={lib.New} />
       <Route name="pay" path="pay" handler={lib.Pay} />
       <Route name="todo" path="todo" handler={lib.Pay} />
       <Route name="sent" path="sent" handler={lib.Pay} />
