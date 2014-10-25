@@ -64,6 +64,17 @@ module.exports = {
         .then(function (task) {
           res.json(task);
       })
+  },
+
+  get_tasks_completed: function (req, res) {
+    var id = req.param('id');
+
+    Task.find({dst_user: id, state: 'closed'})
+        .populate('src_user')
+        .populate('challenge')
+        .then(function (task) {
+          res.json(task);
+      })
   } 
 };
 
