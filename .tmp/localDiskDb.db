@@ -1,0 +1,171 @@
+{
+  "data": {
+    "challenge": [
+      {
+        "Name": "First Challenge",
+        "Amount": 100,
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 1
+      },
+      {
+        "Name": "Second Challenge",
+        "Amount": 40,
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 2
+      },
+      {
+        "Name": "Third Challenge",
+        "Amount": 40,
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 3
+      },
+      {
+        "Name": "Third Challenge",
+        "Amount": 40,
+        "Until": "2014-10-25T13:48:28.000Z",
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 4
+      },
+      {
+        "Name": "Third Challenge",
+        "Amount": 40,
+        "Until": "2014-10-25T13:48:28.000Z",
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 5
+      }
+    ],
+    "fund": [
+      {
+        "Name": "First Fund",
+        "Descript": "Some descript",
+        "AdditionalInfo": {
+          "INN": 7700000000
+        },
+        "id": 5
+      },
+      {
+        "Name": "Second Fund",
+        "Descript": "Some descript",
+        "AdditionalInfo": {
+          "INN": 7700000011
+        },
+        "id": 6
+      }
+    ],
+    "task": [],
+    "user": [
+      {
+        "Name": "First User",
+        "Social_id": 111111,
+        "Social_provider": "facebook",
+        "Rating": 0,
+        "id": 1
+      },
+      {
+        "Name": "Second User",
+        "Social_id": 2222,
+        "Social_provider": "twitter",
+        "Rating": 0,
+        "id": 2
+      }
+    ]
+  },
+  "schema": {
+    "challenge": {
+      "Name": {
+        "type": "string"
+      },
+      "Amount": {
+        "type": "integer",
+        "defaultsTo": 0
+      },
+      "Until": {
+        "type": "datetime"
+      },
+      "Fund": {
+        "type": "integer",
+        "model": "fund",
+        "foreignKey": true,
+        "alias": "Fund"
+      },
+      "skip_avail": {
+        "type": "boolean",
+        "defaultsTo": false
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "fund": {
+      "Name": {
+        "type": "string"
+      },
+      "Descript": {
+        "type": "string"
+      },
+      "Additional_Info": {
+        "type": "json"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "task": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "user": {
+      "Name": {
+        "type": "string"
+      },
+      "Social_id": {
+        "type": "integer"
+      },
+      "Social_provider": {
+        "type": "string",
+        "enum": [
+          "facebook",
+          "vkontakte",
+          "twitter"
+        ]
+      },
+      "Rating": {
+        "type": "integer",
+        "defaultsTo": 0
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    }
+  },
+  "counters": {
+    "challenge": {
+      "id": 5
+    },
+    "fund": {
+      "id": 6
+    },
+    "task": {},
+    "user": {
+      "id": 2
+    }
+  }
+}
