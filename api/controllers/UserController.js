@@ -30,7 +30,18 @@ module.exports = {
   },
 
   get_tasks: function (req, res) {
-    res.json('get_tasks');
+
+    var id = req.param('id');
+
+    User.findOne({id: id}, function (err, user) {
+      Task.find({dst_user: id, state: 'open'})
+        .populate('src_user')
+        .populate('challenge')
+        .then(function (task) {
+          res.json(task);
+      })
+    })
+
   }
 };
 

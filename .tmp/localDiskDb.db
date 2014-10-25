@@ -62,7 +62,22 @@
         "id": 6
       }
     ],
-    "task": [],
+    "task": [
+      {
+        "src_user": 1,
+        "dst_user": 2,
+        "challenge": 3,
+        "state": "closed",
+        "id": 5
+      },
+      {
+        "src_user": 2,
+        "dst_user": 1,
+        "challenge": 2,
+        "state": "open",
+        "id": 6
+      }
+    ],
     "user": [
       {
         "Name": "First User",
@@ -170,6 +185,33 @@
       }
     },
     "task": {
+      "src_user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "src_user"
+      },
+      "dst_user": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "dst_user"
+      },
+      "challenge": {
+        "type": "integer",
+        "model": "challenge",
+        "foreignKey": true,
+        "alias": "challenge"
+      },
+      "state": {
+        "type": "string",
+        "enum": [
+          "open",
+          "closed",
+          "in progress"
+        ],
+        "defaultsTo": "open"
+      },
       "id": {
         "type": "integer",
         "autoIncrement": true,
@@ -284,7 +326,9 @@
     "fund": {
       "id": 6
     },
-    "task": {},
+    "task": {
+      "id": 6
+    },
     "user": {
       "id": 5
     },

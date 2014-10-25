@@ -9,6 +9,29 @@ module.exports = {
 
   attributes: {
 
+    src_user: {
+      model: 'user',
+      required: true
+    },
+
+    dst_user: {
+      model: 'user',
+      required: true
+    },
+
+    challenge: {
+      model: 'challenge',
+      required: true
+    },
+
+    state: {
+      type: 'string',
+      enum: ['open', 'closed', 'in progress'],
+      required: true,
+      defaultsTo: 'open'
+    }
+
+
   }
 };
 
