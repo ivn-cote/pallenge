@@ -168,7 +168,7 @@ lib.MenuLine = React.createClass({
     return (
       <li className={this.b_()}>
         <Link to={this.props.line.route}>
-          <span className="badge pull-right">{this.props.line.count}</span>
+          <span className={'badge pull-right ' + this.b_('-badge')}>{this.props.line.count}</span>
           {this.props.line.title}
         </Link>
       </li>
