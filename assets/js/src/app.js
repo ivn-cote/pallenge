@@ -4,37 +4,64 @@ var bemMixin = require('./bem'),
 
 lib.App = React.createClass({
   mixins: [bemMixin],
-  getInitialState: function() {
+  initApp: function() {
     $.get('/user/1/tasks/').then(this.onReceiveCards);
-    return {
-      initCards: []
-    }
+    $.get('user/1/tasks/count/').then(this.onReceiveCounts);
   },
-  getDefaultProps: function() {
+  getInitialState: function() {
+    this.initApp();
+
     return {
+      initCards: [],
       menuItems: [
         {
+          id: 'full_to_do_count',
           title: 'Full todo list',
-          count: 3
+          count: 0
         },
         {
+          id: 'topay',
           title: 'Need to be paid',
-          count: 4
+          count: 0
         },
         {
+          id: 'sent',
           title: 'Sent',
-          count: 4
+          count: 0
         },
         {
+          id: 'Popular',
           title: 'Popular',
-          count: 4
+          count: 0
         },
         {
+          id: 'completed',
           title: 'Completed',
-          count: 3
+          count: 0
         }
       ]
     }
+  },
+  onReceiveCounts: function(res) {
+    if (!res['result'])
+      return; // TODO SILENCE ERROR
+
+    var newMenu = [];
+
+    for (var key in res['result']) {
+      var mItem = this.state.menuItems.filter(function(item) {
+        return item.id === key;
+      });
+      if (!mItem) {
+        return;
+      } else {
+        mItem = mItem[0];
+      }
+      mItem.count = res['result'][key];
+      newMenu.push(mItem);
+    }
+
+    this.setState({ menuItems: newMenu });
   },
   onReceiveCards: function(res) {
     var cards = res.map(function(card) {
@@ -47,14 +74,9 @@ lib.App = React.createClass({
     this.setState({ initCards: cards });
   },
   render: function() {
-    var menuLines = this.props.menuItems.map(function(line) {
+    var menuLines = this.state.menuItems.map(function(line) {
       return (
-        <li className="active">
-          <a href="#">
-            <span className="badge pull-right">{line.count}</span>
-            {line.title}
-          </a>
-        </li>
+        <lib.MenuLine line={line} />
       );
     });
 
@@ -76,6 +98,20 @@ lib.App = React.createClass({
   }
 });
 
+lib.MenuLine = React.createClass({
+  mixins: [bemMixin],
+  render: function() {
+    return (
+      <li className={this.b_()}>
+        <a href="#">
+          <span className="badge pull-right">{this.props.line.count}</span>
+          {this.props.line.title}
+        </a>
+      </li>
+    );
+  }
+});
+
 lib.Header = React.createClass({
   mixins: [bemMixin],
   render: function() {
@@ -86,7 +122,6 @@ lib.Header = React.createClass({
     );
   }
 });
-
 
 lib.ChallengeCard = React.createClass({
   mixins: [bemMixin],
