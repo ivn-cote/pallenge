@@ -42,6 +42,14 @@
         "skip_avail": false,
         "id": 5,
         "owner": 2
+      },
+      {
+        "owner": 3,
+        "name": "Test challenge",
+        "amount": 0,
+        "descript": "Some desctiption",
+        "skip_avail": false,
+        "id": 6
       }
     ],
     "fund": [
@@ -135,6 +143,9 @@
   "schema": {
     "challenge": {
       "name": {
+        "type": "string"
+      },
+      "descript": {
         "type": "string"
       },
       "amount": {
@@ -321,7 +332,7 @@
   },
   "counters": {
     "challenge": {
-      "id": 5
+      "id": 6
     },
     "fund": {
       "id": 6

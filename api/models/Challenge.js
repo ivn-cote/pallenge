@@ -20,6 +20,11 @@ module.exports = {
       required: true
     },
 
+    descript: {
+      type: 'string',
+      required: true
+    },
+
     amount: {
       type: 'integer',
       defaultsTo: 0
