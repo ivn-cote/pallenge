@@ -53,6 +53,17 @@ module.exports = {
         .then(function (task) {
           res.json(task);
       })
+  },
+
+  get_tasks_sent: function (req, res) {
+    var id = req.param('id');
+
+    Task.find({src_user: id, state: 'open'})
+        .populate('dst_user')
+        .populate('challenge')
+        .then(function (task) {
+          res.json(task);
+      })
   } 
 };
 
