@@ -8,7 +8,7 @@ var stylus = require('gulp-stylus');  // To compile Stylus CSS.
 
 // Define some paths.
 var paths = {
-  css: ['./assets/css/**/*.styl'],
+  css: ['./assets/styles/*.styl'],
   app_js: ['./assets/js/src/app.js'],
   js: ['./assets/js/src/*.js']
 };
@@ -21,11 +21,11 @@ var paths = {
 // });
 
 // // Our CSS task. It finds all our Stylus files and compiles them.
-// gulp.task('css', ['clean'], function() {
-//   return gulp.src(paths.css)
-//     .pipe(stylus())
-//     .pipe(gulp.dest('./src/css'));
-// });
+gulp.task('css', function() {
+  return gulp.src(paths.css)
+    .pipe(stylus())
+    .pipe(gulp.dest('./assets/styles/build'));
+});
 
 // Our JS task. It will Browserify our code and compile React JSX files.
 // gulp.task('js', ['clean'], function() {
@@ -40,9 +40,9 @@ gulp.task('js', function() {
 
 // Rerun tasks whenever a file changes.
 gulp.task('watch', function() {
-  // gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.css, ['css']);
   gulp.watch(paths.js, ['js']);
 });
 
 // The default task (called when we run `gulp` from cli)
-// gulp.task('default', ['watch', 'css', 'js']);
+gulp.task('default', ['watch', 'css', 'js']);

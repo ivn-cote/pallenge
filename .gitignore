@@ -31,3 +31,4 @@ development.js
 
 .tmp
 assets/js/build/*.js
+assets/styles/build/custom.css
