@@ -8,23 +8,23 @@
 module.exports = {
 
   attributes: {
-    Name: {
+    name: {
       type: 'string',
       required: true
     },
 
-    Social_id: {
+    social_id: {
       type: 'integer',
       required: true
     },
 
-    Social_provider: {
+    social_provider: {
       type: 'string',
       enum: ['facebook','vkontakte', 'twitter'],
       required: true
     },
 
-    Rating: {
+    rating: {
       type: 'integer',
       defaultsTo: 0
     }

@@ -15,7 +15,14 @@ module.exports = {
   },
 
   get_friends: function (req, res) {
-    res.json('get_firneds');
+    // var id = req.param('id');
+    // console.log('user_id: ' + id);
+
+    // User.find({id: id }).then(function(user) {
+    //   res.json(user);
+    // })
+
+    res.json({get_friends:  1})
   },
 
   get_challanges: function (req, res) {

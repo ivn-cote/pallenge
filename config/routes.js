@@ -40,7 +40,6 @@ module.exports.routes = {
   'get /auth/(facebook|vkontakte|twitter)/callback': 'AuthController.auth_callback',
 
   'get /challenge/top': 'ChallengeController.get_top',
-  // 'get /challenge/:id': 'ChallengeController.g',
 
   // 'get /user': 'UserController.index',
   // 'get /user/:id': 'UserController.get',

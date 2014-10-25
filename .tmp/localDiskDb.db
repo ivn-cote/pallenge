@@ -6,29 +6,24 @@
         "Amount": 100,
         "Fund": 4,
         "skip_avail": false,
-        "id": 1
+        "id": 1,
+        "owner": 1
       },
       {
         "Name": "Second Challenge",
         "Amount": 40,
         "Fund": 4,
         "skip_avail": false,
-        "id": 2
+        "id": 2,
+        "owner": 1
       },
       {
         "Name": "Third Challenge",
         "Amount": 40,
         "Fund": 4,
         "skip_avail": false,
-        "id": 3
-      },
-      {
-        "Name": "Third Challenge",
-        "Amount": 40,
-        "Until": "2014-10-25T13:48:28.000Z",
-        "Fund": 4,
-        "skip_avail": false,
-        "id": 4
+        "id": 3,
+        "owner": 2
       },
       {
         "Name": "Third Challenge",
@@ -36,7 +31,17 @@
         "Until": "2014-10-25T13:48:28.000Z",
         "Fund": 4,
         "skip_avail": false,
-        "id": 5
+        "id": 4,
+        "owner": 2
+      },
+      {
+        "Name": "Third Challenge",
+        "Amount": 40,
+        "Until": "2014-10-25T13:48:28.000Z",
+        "Fund": 4,
+        "skip_avail": false,
+        "id": 5,
+        "owner": 2
       }
     ],
     "fund": [
@@ -72,30 +77,73 @@
         "Social_provider": "twitter",
         "Rating": 0,
         "id": 2
+      },
+      {
+        "name": "sss",
+        "social_id": 333,
+        "social_provider": "vkontakte",
+        "rating": 0,
+        "id": 3
+      },
+      {
+        "name": "sss",
+        "social_id": 333,
+        "social_provider": "vkontakte",
+        "rating": 0,
+        "id": 4
+      }
+    ],
+    "friend": [],
+    "friend_user__user_friends": [],
+    "friend_owner__user_friends": [
+      {
+        "user_friends": 2,
+        "friend_owner": 16,
+        "id": 1
+      }
+    ],
+    "user_friends__user_friends": [
+      {
+        "user_friends": 1,
+        "id": 2
+      },
+      {
+        "user_friends": 3,
+        "id": 3
+      },
+      {
+        "user_friends": 4,
+        "id": 4
       }
     ]
   },
   "schema": {
     "challenge": {
-      "Name": {
+      "name": {
         "type": "string"
       },
-      "Amount": {
+      "amount": {
         "type": "integer",
         "defaultsTo": 0
       },
-      "Until": {
+      "until": {
         "type": "datetime"
       },
-      "Fund": {
+      "fund": {
         "type": "integer",
         "model": "fund",
         "foreignKey": true,
-        "alias": "Fund"
+        "alias": "fund"
       },
       "skip_avail": {
         "type": "boolean",
         "defaultsTo": false
+      },
+      "owner": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "owner"
       },
       "id": {
         "type": "integer",
@@ -105,13 +153,13 @@
       }
     },
     "fund": {
-      "Name": {
+      "name": {
         "type": "string"
       },
-      "Descript": {
+      "descript": {
         "type": "string"
       },
-      "Additional_Info": {
+      "additional_info": {
         "type": "json"
       },
       "id": {
@@ -130,13 +178,13 @@
       }
     },
     "user": {
-      "Name": {
+      "name": {
         "type": "string"
       },
-      "Social_id": {
+      "social_id": {
         "type": "integer"
       },
-      "Social_provider": {
+      "social_provider": {
         "type": "string",
         "enum": [
           "facebook",
@@ -144,7 +192,7 @@
           "twitter"
         ]
       },
-      "Rating": {
+      "rating": {
         "type": "integer",
         "defaultsTo": 0
       },
@@ -153,6 +201,79 @@
         "autoIncrement": true,
         "primaryKey": true,
         "unique": true
+      }
+    },
+    "friend": {
+      "owner": {
+        "type": "integer",
+        "model": "user",
+        "foreignKey": true,
+        "alias": "owner"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "primaryKey": true,
+        "unique": true
+      }
+    },
+    "friend_user__user_friends": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "friend_user": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "friend",
+        "on": "id",
+        "via": "user_friends"
+      },
+      "user_friends": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "user",
+        "on": "id",
+        "via": "friend_user"
+      }
+    },
+    "friend_owner__user_friends": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "friend_owner": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "friend",
+        "on": "id",
+        "via": "user_friends"
+      },
+      "user_friends": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "user",
+        "on": "id",
+        "via": "friend_owner"
+      }
+    },
+    "user_friends__user_friends": {
+      "id": {
+        "primaryKey": true,
+        "unique": true,
+        "autoIncrement": true,
+        "type": "integer"
+      },
+      "user_friends": {
+        "type": "integer",
+        "foreignKey": true,
+        "references": "user",
+        "on": "id",
+        "via": "user_friends"
       }
     }
   },
@@ -165,7 +286,17 @@
     },
     "task": {},
     "user": {
-      "id": 2
+      "id": 5
+    },
+    "friend": {
+      "id": 16
+    },
+    "friend_user__user_friends": {},
+    "friend_owner__user_friends": {
+      "id": 1
+    },
+    "user_friends__user_friends": {
+      "id": 4
     }
   }
 }

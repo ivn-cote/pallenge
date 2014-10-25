@@ -15,28 +15,33 @@ module.exports = {
   },
 
   attributes: {
-    Name: {
+    name: {
       type: 'string',
       required: true
     },
 
-    Amount: {
+    amount: {
       type: 'integer',
       defaultsTo: 0
     },
 
-    Until: {
+    until: {
       type: 'datetime',
       isUntilValid: true
     },
 
-    Fund: {
+    fund: {
       model: 'Fund'
     },
 
     skip_avail: {
       type: 'boolean',
       defaultsTo: false
+    },
+
+    owner: {
+      model: 'user',
+      required: true
     }
 
   }
